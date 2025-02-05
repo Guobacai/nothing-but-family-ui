@@ -1,10 +1,11 @@
-import { Input, Label, Field, Button, Fieldset, Legend } from '@headlessui/react'
+import { Button } from '@headlessui/react'
 import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
 import { setSideFormOpen } from "./spendingSlice"
 import type { RootState } from '../../store';
 import { useGetRecordsQuery } from '../../api/fin'
 import { HotTable, HotColumn } from '@handsontable/react-wrapper'
+import SpendingForm from './SpendingForm';
 
 export default function Spending() {
     const dispatch = useDispatch();
@@ -17,12 +18,8 @@ export default function Spending() {
         dispatch(setSideFormOpen(!isOpen));
     }
 
-    const handleSubmitBtn = () => {
-        dispatch(setSideFormOpen(false));
-    }
-
     if (isLoading) {
-        return <div> Loading </div>
+        return <div>Loading</div>
     }
 
     return <div>
@@ -57,37 +54,7 @@ export default function Spending() {
             "-mm-right-72": !isOpen,
         })}>
             <div className='mm-flex-auto'>
-                <Fieldset className="mm-flex mm-flex-col mm-gap-5">
-                    <Legend>Spending Details</Legend>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Total Salary</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number" />
-                    </Field>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Appartment Common Charge</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number" />
-                    </Field>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Appartment Mortgage</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number" />
-                    </Field>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Appartment Utility</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number" />
-                    </Field>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Stock Fund</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number" />
-                    </Field>
-                    <Field className="mm-flex mm-flex-col">
-                        <Label>Credit Card Spending</Label>
-                        <Input className="mm-border-2 mm-border-black mm-rounded" type="number"></Input>
-                    </Field>
-                </Fieldset>
-            </div>
-            <div className='mm-flex mm-justify-evenly'>
-                <Button className="mm-bg-neutral-200 mm-p-2 mm-rounded-lg" onClick={handleSubmitBtn}>Cancel</Button>
-                <Button className="mm-bg-blue-500 mm-text-white mm-p-2 mm-rounded-lg">Submit</Button>
+                <SpendingForm />
             </div>
         </div>
     </div>

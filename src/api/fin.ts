@@ -23,8 +23,15 @@ export const finApi = createApi({
     endpoints: (builder) => ({
         getRecords: builder.query<FinRecord, void>({
             query: () => 'records'
+        }),
+        createRecord: builder.mutation({
+            query: (payload) => ({
+                url: 'records',
+                method: "POST",
+                body: payload,
+            })
         })
     })
 });
 
-export const { useGetRecordsQuery } = finApi
+export const { useGetRecordsQuery, useCreateRecordMutation } = finApi

@@ -12,7 +12,6 @@ import Home from './pages/home/HomePage.tsx';
 import { store } from './store.ts'
 import { Provider } from 'react-redux'
 
-import Handsontable from 'handsontable/base'
 import { registerAllModules } from 'handsontable/registry'
 
 import 'handsontable/styles/handsontable.min.css';
