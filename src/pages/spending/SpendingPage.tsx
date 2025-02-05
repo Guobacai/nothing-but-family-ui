@@ -49,12 +49,15 @@ export default function Spending() {
             </div>
             <Button className="mm-bg-blue-500 mm-text-white mm-p-2 mm-rounded-lg" onClick={handleClickToggleBtn}>Add</Button>
         </div>
-        <div className={clsx('mm-absolute mm-top-0 mm-h-screen mm-flex mm-flex-col mm-bg-neutral-100 mm-w-72 mm-rounded-l-md mm-p-5', {
+        {
+            isOpen && <div className='mm-absolute mm-top-0 mm-left-0 mm-w-screen mm-h-screen mm-bg-neutral-200 mm-z-[200] mm-opacity-60'></div>
+        }
+        <div className={clsx('mm-absolute mm-z-[205] mm-top-0 mm-h-screen mm-flex mm-flex-col mm-bg-neutral-100 mm-w-72 mm-rounded-l-md mm-p-5', {
             "mm-right-0": isOpen,
-            "-mm-right-72": !isOpen,
+            "-mm-right-80": !isOpen,
         })}>
             <div className='mm-flex-auto'>
-                <SpendingForm />
+                <SpendingForm onClickCancel={() => { dispatch(setSideFormOpen(false))}}/>
             </div>
         </div>
     </div>

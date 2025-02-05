@@ -2,6 +2,7 @@ import { Button, Input, Label, Field, Fieldset, Legend } from '@headlessui/react
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useCreateRecordMutation } from '../../api/fin'
 import { format } from 'date-fns'
+import React from 'react'
 
 interface FormData {
     financialMonth: string,
@@ -14,7 +15,11 @@ interface FormData {
     saving: number
 }
 
-function SpendingForm({ formData }: { formData: FormData }) {
+interface SpendingFormProps {
+    onClickCancel: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+function SpendingForm({ onClickCancel } : SpendingFormProps) {
     const [ createRecordRequest ] = useCreateRecordMutation();
     const { handleSubmit, register } = useForm<FormData>();
 
@@ -26,29 +31,29 @@ function SpendingForm({ formData }: { formData: FormData }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="mm-flex mm-flex-col mm-gap-5">
-            <Legend>Spending Details</Legend>
+            <Legend>Add Spending</Legend>
             <Field className="mm-flex mm-flex-col">
-                <Label>Total Salary</Label>
+                <Label>Total Income</Label>
                 <Input className="mm-border-2 mm-border-black mm-rounded" type="number"  {...register("totalSalary", { valueAsNumber: true })}/>
             </Field>
             <Field className="mm-flex mm-flex-col">
-                <Label>Appartment Common Charge</Label>
+                <Label>Appartment Expense</Label>
                 <Input className="mm-border-2 mm-border-black mm-rounded" type="number"  {...register("aptCommonCharge", { valueAsNumber: true })}/>
-            </Field>
-            <Field className="mm-flex mm-flex-col">
-                <Label>Appartment Mortgage</Label>
-                <Input className="mm-border-2 mm-border-black mm-rounded" type="number"  {...register("aptMortgage", { valueAsNumber: true })}/>
             </Field>
             <Field className="mm-flex mm-flex-col">
                 <Label>Appartment Utility</Label>
                 <Input className="mm-border-2 mm-border-black mm-rounded" type="number" {...register("utility", { valueAsNumber: true })}/>
             </Field>
             <Field className="mm-flex mm-flex-col">
-                <Label>Stock Fund</Label>
+                <Label>Mortgage</Label>
+                <Input className="mm-border-2 mm-border-black mm-rounded" type="number"  {...register("aptMortgage", { valueAsNumber: true })}/>
+            </Field>
+            <Field className="mm-flex mm-flex-col">
+                <Label>Investment Fund</Label>
                 <Input className="mm-border-2 mm-border-black mm-rounded" type="number" {...register("merrill", { valueAsNumber: true })}/>
             </Field>
             <Field className="mm-flex mm-flex-col">
-                <Label>Credit Card Spending</Label>
+                <Label>Credit Card</Label>
                 <Input className="mm-border-2 mm-border-black mm-rounded" type="number" {...register("creditCard", { valueAsNumber: true })}/>
             </Field>
             <Field className="mm-flex mm-flex-col">
@@ -57,7 +62,7 @@ function SpendingForm({ formData }: { formData: FormData }) {
             </Field>
         </Fieldset>
         <div className='mm-flex mm-justify-evenly'>
-            <Button className="mm-bg-neutral-200 mm-p-2 mm-rounded-lg">Cancel</Button>
+            <Button className="mm-bg-neutral-200 mm-p-2 mm-rounded-lg" onClick={onClickCancel}>Cancel</Button>
             <Button type="submit" className="mm-bg-blue-500 mm-text-white mm-p-2 mm-rounded-lg">Submit</Button>
         </div>
     </form>
