@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
 import { setSideFormOpen } from "./spendingSlice"
 import type { RootState } from '../../store';
-import { useGetRecordsQuery } from '../../api/fin'
+import { useGetRecordsQuery, useDeleteRecordMutation } from '../../api/fin'
 import { HotTable, HotColumn } from '@handsontable/react-wrapper'
 import SpendingForm from './SpendingForm';
 
@@ -11,6 +11,7 @@ export default function Spending() {
     const dispatch = useDispatch();
 
     const { data: records, isLoading } = useGetRecordsQuery();
+    const [deleteRecord] = useDeleteRecordMutation();
 
     const isOpen = useSelector((state: RootState) => state.spending.isSideFormOpen);
 
@@ -32,6 +33,17 @@ export default function Spending() {
                     height="auto"
                     autoWrapRow={true}
                     autoWrapCol={true}
+                    disableVisualSelection={true}
+                    contextMenu={{
+                        items: {
+                            "remove_row": {
+                                callback: function (key: any, selection : any) {
+                                    const { start } = selection[0];
+                                    deleteRecord(records.result[start.row].id);
+                                }
+                            }
+                        }
+                    }}
                     licenseKey="non-commercial-and-evaluation" // for non-commercial use only
                 >
                     <HotColumn data="id" title="ID" />

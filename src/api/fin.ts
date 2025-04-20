@@ -24,14 +24,23 @@ export const finApi = createApi({
         getRecords: builder.query<FinRecord, void>({
             query: () => 'records'
         }),
+        getRecordByYearAndMonth: builder.query<FinRecord, { year: string, month: string }>({
+            query: ({ year, month }) => `records/getByYearAndMonth?year=${year}&month=${month}`
+        }),
         createRecord: builder.mutation({
             query: (payload) => ({
                 url: 'records',
                 method: "POST",
                 body: payload,
             })
+        }),
+        deleteRecord: builder.mutation({
+            query: (recordId) => ({
+                url: `records/${recordId}`,
+                method: "DELETE",
+            }),
         })
     })
 });
 
-export const { useGetRecordsQuery, useCreateRecordMutation } = finApi
+export const { useGetRecordsQuery, useCreateRecordMutation, useDeleteRecordMutation, useGetRecordByYearAndMonthQuery } = finApi

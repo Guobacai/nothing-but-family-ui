@@ -8,6 +8,9 @@ import App from './App.tsx'
 import './index.css'
 import Spending from './pages/spending/SpendingPage.tsx';
 import Home from './pages/home/HomePage.tsx';
+import FinancialHome from './pages/fin/FinancialHome.tsx';
+import MonthFinance from './pages/fin/MonthFinance.tsx'
+import CalendarMonth from './pages/fin/CalendarMonth.tsx'
 
 import { store } from './store.ts'
 import { Provider } from 'react-redux'
@@ -31,6 +34,20 @@ const router = createBrowserRouter([
       {
         path: "/spending",
         element: <Spending />,
+      },
+      {
+        path: "/finance",
+        element: <FinancialHome />,
+        children: [
+          {
+            path: ":year",
+            element: <CalendarMonth />,
+          }
+        ]
+      },
+      {
+        path: "/finance/:year/:month",
+        element: <MonthFinance />,
       }
     ]
   },
