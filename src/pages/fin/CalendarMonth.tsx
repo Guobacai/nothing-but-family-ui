@@ -16,6 +16,7 @@ function CalendarMonth() {
           </div>
         ))  
       }
+      <div>Year Summary:</div>
     </div>
   )
 }

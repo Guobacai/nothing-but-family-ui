@@ -21,7 +21,7 @@ function MonthSquare({ month, year } : { month: number, year : number }) {
   }, [month])
 
   return (
-    <div className='mm-flex mm-flex-col mm-h-full mm-w-full mm-bg-sky-50 mm-rounded-t-lg mm-cursor-pointer' onClick={() => navigate(`/finance/${year}/${month}`)}>
+    <div className='mm-flex mm-flex-col mm-h-full mm-w-full mm-bg-sky-50 mm-rounded-t-lg mm-cursor-pointer' onClick={() => navigate(`/home/finance/${year}/${month}`)}>
       <div className={`mm-h-1/5 ${headerColor} mm-rounded-t-lg`}></div>
       <div className='mm-h-4/5 mm-flex mm-justify-center mm-items-center mm-text-lg mm-text-bold'>{MONTHS[month - 1]}</div>
     </div>

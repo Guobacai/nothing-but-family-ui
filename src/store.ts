@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import spendingReducer from './pages/spending/spendingSlice.ts';
+import spendingReducer from './pages/fin/spendingSlice.ts';
 import { finApi } from './api/fin.ts';
 
 export const store = configureStore({

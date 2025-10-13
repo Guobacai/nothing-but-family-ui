@@ -1,5 +1,3 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Pie } from 'react-chartjs-2'
 
 function SpendingPieChart({ chartData }) {
@@ -20,7 +18,5 @@ function SpendingPieChart({ chartData }) {
     </div>
   )
 }
-
-SpendingPieChart.propTypes = {}
 
 export default SpendingPieChart

@@ -6,11 +6,12 @@ import {
 } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
-import Spending from './pages/spending/SpendingPage.tsx';
 import Home from './pages/home/HomePage.tsx';
 import FinancialHome from './pages/fin/FinancialHome.tsx';
 import MonthFinance from './pages/fin/MonthFinance.tsx'
 import CalendarMonth from './pages/fin/CalendarMonth.tsx'
+import LoginPage from './pages/login/LoginPage.tsx';
+import RegisterUser from './pages/signup/RegisterUser.tsx'
 
 import { store } from './store.ts'
 import { Provider } from 'react-redux'
@@ -28,27 +29,35 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterUser />,
+      },
+      {
         path: "/home",
         element: <Home />,
-      },
-      {
-        path: "/spending",
-        element: <Spending />,
-      },
-      {
-        path: "/finance",
-        element: <FinancialHome />,
         children: [
           {
-            path: ":year",
-            element: <CalendarMonth />,
-          }
+            path: "finance",
+            element: <FinancialHome />,
+            children: [
+              {
+                path: ":year",
+                element: <CalendarMonth />,
+                children: [
+                ]
+              },
+              {
+                path: ":year/:month",
+                element: <MonthFinance />,
+              }
+            ]
+          },
         ]
       },
-      {
-        path: "/finance/:year/:month",
-        element: <MonthFinance />,
-      }
     ]
   },
 ]);

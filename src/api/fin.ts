@@ -19,28 +19,64 @@ interface FinRecord {
 
 export const finApi = createApi({
     reducerPath: 'finApi',
-    baseQuery: fetchBaseQuery({ baseUrl: "/api"}),
+    tagTypes: ['FinancialRecords'],
+    baseQuery: fetchBaseQuery({
+        baseUrl: "/api",
+        prepareHeaders: (headers) => {
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+
+            if (token) {
+                headers.set('authorization', `Bearer ${token}`);
+            }
+
+            return headers;
+        }
+    }),
     endpoints: (builder) => ({
-        getRecords: builder.query<FinRecord, void>({
-            query: () => 'records'
-        }),
-        getRecordByYearAndMonth: builder.query<FinRecord, { year: string, month: string }>({
-            query: ({ year, month }) => `records/getByYearAndMonth?year=${year}&month=${month}`
-        }),
-        createRecord: builder.mutation({
+        login: builder.mutation({
             query: (payload) => ({
-                url: 'records',
+                url: 'auth/login',
                 method: "POST",
                 body: payload,
             })
         }),
+        signupUser: builder.mutation({
+            query: (payload) => ({
+                url: 'auth/signup',
+                method: "POST",
+                body: payload,
+            })
+        }),
+        getRecords: builder.query<FinRecord, void>({
+            query: () => 'records'
+        }),
+        getRecordByYearAndMonth: builder.query<FinRecord, { year: string, month: string }>({
+            query: ({ year, month }) => `records/getByYearAndMonth?year=${year}&month=${month}`,
+            providesTags: (result, error, arg) => {
+                return [{ type: 'FinancialRecords', month: arg.month, year: arg.year }]
+            },
+        }),
+        createRecord: builder.mutation({
+            query: (payload) => ({
+                url: 'record',
+                method: "POST",
+                body: payload,
+            }),
+            invalidatesTags: (result, error, arg) => {
+                console.log( 'createRecord result:', result )
+                return [{ type: 'FinancialRecords', month: result.month, year: result.year }]
+            }
+        }),
         deleteRecord: builder.mutation({
-            query: (recordId) => ({
-                url: `records/${recordId}`,
+            query: ({recordId}) => ({
+                url: `record/${recordId}`,
                 method: "DELETE",
             }),
+            invalidatesTags: (result, error, arg) => {
+                return [{ type: 'FinancialRecords', month: arg.month, year: arg.year }]
+            }
         })
     })
 });
 
-export const { useGetRecordsQuery, useCreateRecordMutation, useDeleteRecordMutation, useGetRecordByYearAndMonthQuery } = finApi
+export const { useGetRecordsQuery, useCreateRecordMutation, useDeleteRecordMutation, useGetRecordByYearAndMonthQuery, useLoginMutation, useSignupUserMutation } = finApi

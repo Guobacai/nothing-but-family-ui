@@ -17,15 +17,25 @@ interface FormData {
 
 interface SpendingFormProps {
     onClickCancel: (event: React.MouseEvent<HTMLButtonElement>) => void
+    year: string | undefined
+    month: string | undefined
 }
 
-function SpendingForm({ onClickCancel } : SpendingFormProps) {
+function SpendingForm({ onClickCancel, year, month } : SpendingFormProps) {
     const [ createRecordRequest ] = useCreateRecordMutation();
     const { handleSubmit, register } = useForm<FormData>();
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
         data.financialMonth = format(new Date(), 'yyyy-MM')
-        createRecordRequest(data)
+        const { data: createdRecord, isSuccess, isError } = await createRecordRequest({ items: data, year, month });
+
+        console.log("created record", createdRecord)
+
+        if (isSuccess) {
+            // invalidate the query cache to refetch the records
+        } else if (isError) {
+            // show error message
+        }
     }
 
   return (
