@@ -3,7 +3,7 @@ import { Button } from '@headlessui/react';
 import {
   useGetRecordByYearAndMonthQuery,
   useDeleteRecordMutation,
-} from '../../api/fin';
+} from '../../api/app';
 import { HotTable, HotColumn } from '@handsontable/react-wrapper';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSideFormOpen } from './spendingSlice';
