@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { User } from '../types/user';
 
 interface FinRecord {
   FinMonth: string;
@@ -71,6 +72,12 @@ export const appApi = createApi({
         return [{ type: 'FinancialRecords', month: arg.month, year: arg.year }];
       },
     }),
+    getUserById: builder.query<User[], { userId: string }>({
+      query: ({ userId }) => `user/${userId}`,
+    }),
+    getTagsByFamilyId: builder.query<string[], { familyId: string }>({
+      query: ({ familyId }) => `tags?familyId=${familyId}`,
+    }),
   }),
 });
 
@@ -79,4 +86,6 @@ export const {
   useCreateRecordMutation,
   useDeleteRecordMutation,
   useGetRecordByYearAndMonthQuery,
+  useGetTagsByFamilyIdQuery,
+  useGetUserByIdQuery,
 } = appApi;

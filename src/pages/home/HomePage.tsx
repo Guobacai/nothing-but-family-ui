@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom';
-import { Outlet } from 'react-router'
+import { Outlet } from 'react-router';
+import TopNavigation from '../../components/top-navigation/TopNavigation';
 
 export default function Home() {
-    return <div>
-        <NavLink to="/home/finance">See the finance of your home.</NavLink>
-        <Outlet />
+  return (
+    <div>
+      <TopNavigation />
+      <Outlet />
     </div>
+  );
 }

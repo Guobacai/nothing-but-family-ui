@@ -15,12 +15,17 @@ function LoginPage() {
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
     try {
-      const response = await login({ username, password }).unwrap();
+      const { authToken, userID } = await login({
+        username,
+        password,
+      }).unwrap();
 
-      setCookie('token', response.authToken, { path: '/' });
+      setCookie('token', authToken, { path: '/' });
 
-      navigate('/home');
+      // Go to user home page.
+      navigate(`/users/${userID}`);
     } catch (error) {
+      // TODO: Add UI for login failed.
       console.error('Login failed:', error);
     }
   };
