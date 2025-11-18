@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { useGetUserByIdQuery } from '../../api/app';
 import { NavLink } from 'react-router-dom';
-import BasicButton from '~/components/button/BasicButton';
+import { Button } from 'simpleact-ui';
 
 export default function UserMain() {
   const { userId } = useParams();
@@ -14,6 +14,8 @@ export default function UserMain() {
 
   const { familyHost } = data.result;
 
+  console.log('family host', familyHost);
+
   return (
     <div>
       <div>Hello, this is user {userId}</div>
@@ -21,16 +23,17 @@ export default function UserMain() {
         Here should be the flow of information like the Linkedin. Gather all
         information from different families.
       </div>
+      <div>
+        <Button>Create New Family</Button>
+      </div>
       <div className="mm-text-red">
-        {!familyHost ? (
+        {familyHost ? (
           <NavLink to={`/family/${familyHost.id}`}>
             <div>You own this family {familyHost.name}</div>
           </NavLink>
         ) : (
           <div>
-            <BasicButton className="mm-font-bold">
-              Create New Family
-            </BasicButton>
+            <Button>Create New Family</Button>
           </div>
         )}
       </div>

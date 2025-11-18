@@ -1,9 +1,9 @@
 import React from 'react';
-import PasswordInput from '../../components/input/PasswordInput';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../api/auth';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { InputPassword, Input, Button } from 'simpleact-ui';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -31,32 +31,27 @@ function LoginPage() {
   };
 
   return (
-    <div className="mm-flex mm-justify-center mm-items-center mm-h-screen mm-bg-gray-100">
-      <div className="mm-w-96 mm-flex mm-flex-col mm-gap-4">
-        <h1 className="mm-text-3xl mm-text-center mm-font-bold">Welcome!</h1>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-96 flex flex-col gap-4">
+        <h1 className="text-3xl text-center font-bold">Welcome!</h1>
         <div>
-          <form className="mm-flex mm-flex-col mm-gap-4" onSubmit={handleLogin}>
-            <div className="mm-flex mm-flex-col mm-gap-2">
-              <input
-                placeholder="username"
+          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+            <div className="flex flex-col gap-2">
+              <Input
+                placeholder="User Name"
                 type="text"
                 name="username"
-                className="mm-outline-none mm-border mm-rounded-md mm-px-2 mm-py-1"
+                label="User Name:"
               />
             </div>
-            <div className="mm-flex mm-flex-col mm-gap-2">
-              <PasswordInput />
+            <div className="flex flex-col gap-2">
+              <InputPassword label="Password:" name="password" />
             </div>
-            <button
-              type="submit"
-              className="mm-bg-blue-500 mm-text-white mm-rounded-md mm-px-4 mm-py-2"
-            >
-              Sign In
-            </button>
+            <Button type="submit">Sign In</Button>
           </form>
         </div>
-        <div className="mm-flex mm-justify-end">
-          <Link to="/register" className="mm-text-blue-500 mm-text-center">
+        <div className="flex justify-end">
+          <Link to="/register" className="text-blue-500 text-center">
             Sign up
           </Link>
         </div>
